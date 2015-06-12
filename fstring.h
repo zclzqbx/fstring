@@ -12,6 +12,7 @@
 
 using namespace std;
 
+//declare
 extern bool stringToBoolValid;
 extern bool stringToIntValid;
 extern bool stringToDoubleValid;
