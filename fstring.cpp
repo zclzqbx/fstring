@@ -52,6 +52,7 @@ int stringToInt(const string& str)//转化成整数
 		i++;
 		flagPlusMinus=1;
 	}
+	int tempInt1(0),tempInt2(0);
 	for(;i<str.size();++i)
 	{
 		if(str[i]<'0' || str[i]>'9')
@@ -60,7 +61,24 @@ int stringToInt(const string& str)//转化成整数
 			returnInt=0;
 			return returnInt;
 		}
-		returnInt=returnInt*10+str[i]-'0';
+		
+		tempInt1=tempInt2=returnInt;
+		for(int k=1;k<10;++k)
+		{
+			tempInt1+=tempInt2;
+			if(tempInt1<0)
+			{
+				stringToIntValid=false;
+				return tempInt1;
+			}
+		}
+		int k=str[i]-'0';
+		if(tempInt1+k<0)
+		{
+			stringToIntValid=false;
+			return tempInt1;
+		}		
+		returnInt=tempInt1+k;
 	}//如果只有一个正号或负号，输出也是零
 	
 	if(flagPlusMinus)
@@ -68,6 +86,8 @@ int stringToInt(const string& str)//转化成整数
 	return returnInt;
 }
 
+
+//有一个问题，浮点数的位数不能太多，否则会出现四舍五入的情况
 double stringToDouble(const string& str)//转化成浮点数
 {
 	if(str.empty())
@@ -116,11 +136,13 @@ double stringToDouble(const string& str)//转化成浮点数
 		}
 		returnDouble=returnDouble*10+str[i]-'0';
 	}
+
 	for(int t=0;t<decimalNum;++t)
 		returnDouble/=10;
-
+	
 	if(flagPlusMinus)
 		returnDouble*=(-1);
+	
 	return returnDouble;
 }
 
